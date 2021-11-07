@@ -1,16 +1,10 @@
-# vscode-plugin-demo
+# Replace-Shark-Key
 
-VSCode插件开发全攻略系列文章配套demo。
+# 代码片段中，中文文案替换成对应的shark key
 
-# 文章索引
+# 项目本地需要有对应的 defaultLanguageJson 文件
 
-* [VSCode插件开发全攻略（一）概览](http://blog.haoji.me/vscode-plugin-overview.html)
-* [VSCode插件开发全攻略（二）HelloWord](http://blog.haoji.me/vscode-plugin-hello-world.html)
-* [VSCode插件开发全攻略（三）package.json详解](http://blog.haoji.me/vscode-plugin-package-json.html)
-* [VSCode插件开发全攻略（四）命令、菜单、快捷键](http://blog.haoji.me/vscode-plugin-command-and-menu.html)
-* [VSCode插件开发全攻略（五）跳转到定义、自动补全、悬停提示](http://blog.haoji.me/vscode-plugin-jump-completion-hover.html)
-* [VSCode插件开发全攻略（六）开发调试技巧](http://blog.haoji.me/vscode-plugin-develop-tips.html)
-* [VSCode插件开发全攻略（七）WebView](http://blog.haoji.me/vscode-plugin-webview.html)
-* [VSCode插件开发全攻略（八）代码片段、设置、自定义欢迎页](http://blog.haoji.me/vscode-plugin-snippets-and-settings.html)
-* [VSCode插件开发全攻略（九）常用API总结](http://blog.haoji.me/vscode-plugin-common-api.html)
-* [VSCode插件开发全攻略（十）打包、发布、升级](http://blog.haoji.me/vscode-plugin-publish.html)
+## TODO
+### 1、支持在插件上输入匹配的正则, 输入需要替换成的格式
+### 2、保存的时候开始替换
+### 3、在插件上配置APPID，拉下所有的sharkData 自动替换中文，无须本地先配置json
