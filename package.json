@@ -78,11 +78,11 @@
     },
     "license": "SEE LICENSE IN LICENSE.txt",
     "bugs": {
-        "url": ""
+        "url": "https://github.com/adouwt/vscode-extension-replacekey"
     },
     "repository": {
         "type": "git",
-        "url": ""
+        "url": "https://github.com/adouwt/vscode-extension-replacekey"
     },
-    "homepage": ""
+    "homepage": "https://github.com/adouwt/vscode-extension-replacekey"
 }
