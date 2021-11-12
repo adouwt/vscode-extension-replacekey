@@ -25,9 +25,11 @@ module.exports =  function(context) {
     vscode.commands.registerCommand('extension.replaceShark', async () => {
         // 1.获取当前项目的 defaultLanguageJson 文件，
         let document = vscode.window.activeTextEditor.document
-        const fileName    = document.fileName;
-        const workDir     = path.dirname(fileName);
-        const jsonpath = workDir+'/test/language.json'
+        const fileName = document.fileName;
+        let workDir  = path.dirname(fileName);
+        // '/Users/wangtao/workspace/Car-Commodity-Operation/layout'
+        workDir = workDir.split('Car-Commodity-Operation')[0] + 'Car-Commodity-Operation'
+        const jsonpath = workDir+'/utils/defaultLanguageJson.json'
         let jsonFile = await readFile(jsonpath)
         let defaultLanguageJson = JSON.parse(jsonFile);
         // 2.执行替换逻辑
@@ -36,18 +38,33 @@ module.exports =  function(context) {
         if (activeTextEditor && activeTextEditor.document.languageId === 'javascript' || activeTextEditor.document.languageId === 'typescriptreact') {
             let codeFileTmp = await readFile(fileName)
             let codeFile = '';
+            let chineseReg = /\"([^\u0000-\u007F]+)\"/gm; // 中文的正则，支持分词 如 "中文"
+            let chineseReg1 = /\{\'([^\u0000-\u007F]+)\'\}/gm; // 中文的正则，支持分词 如 {'中文'}
+            let chineseReg2 = /\'([^\u0000-\u007F]+)\'/gm; // 中文的正则，支持分词 如 '中文'
+            let chineseReg3 = /([^\u0000-\u007F]+)/gm; // 中文的正则，支持分词 如 中文
+            codeFileTmp = codeFileTmp.replace(chineseReg, "$1"); // => 中文
+            codeFileTmp = codeFileTmp.replace(chineseReg1, "$1"); // => 中文
+            // codeFileTmp = codeFileTmp.replace(chineseReg2, "$1"); // => 中文
+
+
+            // 如果是 '中文' ， 就不执行下面的 替换
+            if(!chineseReg2.test(codeFileTmp)) {
+                codeFileTmp = codeFileTmp.replace(chineseReg3, "{'$1'}"); // => {'中文'}
+            }
+
+
             for (let i in defaultLanguageJson) {
                 let itemObj = defaultLanguageJson[i];
-                itemObj.replace(/\(/g, '（').replace(/\)/g, '）');
+                itemObj.replace(/\(/g, '（').replace(/\)/g, '）'); 
                 // 正则修改 匹配 {'车型'}  => {sharkData['storemange.pickupandreturnacarfromanotherstore.model']}
                 var textReg = new RegExp("'" + itemObj + "'", 'gm');
                 // 正则修改 匹配 "车型"  => {sharkData['storemange.pickupandreturnacarfromanotherstore.model']}
                 // var textReg = new RegExp("\"" + itemObj + "\"", 'gm');
                 // 正则修改
                 if (codeFile) {
-                codeFile = codeFile.replace(textReg, `sharkData['${i}']`);
+                    codeFile = codeFile.replace(textReg, `sharkData['${i}']`);
                 } else {
-                codeFile = codeFileTmp.replace(textReg, `sharkData['${itemObj}']`);
+                    codeFile = codeFileTmp.replace(textReg, `sharkData['${itemObj}']`);
                 }
             }
             if (codeFile.indexOf('useShark') == -1) {
